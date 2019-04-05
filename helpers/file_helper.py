@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-  
 import os, sys, time
-import json
+import json, csv
 
 def read_file_all(path):
     context = ""
@@ -31,8 +31,8 @@ def read_file_json(path):
     try:
         with open(path, 'r') as f:
             json_object = json.load(f)
-    except:
-        print("read_file_json error:" + path)
+    except Exception as e:
+        print("read_file_json %s error: %s" % (path, str(e)))
     return json_object
 
 def save_file_json(path, context):
@@ -41,3 +41,14 @@ def save_file_json(path, context):
             json.dump(context, json_file, ensure_ascii=False)
     except:
         print("save_file_json error:" + path)
+
+def read_file_csv(path):
+    csv_object = []
+    try:
+        with open(path, 'r') as f:
+            readCSV = csv.reader(f, delimiter=',')
+            for row in readCSV:
+                csv_object.append(row)
+    except Exception as e:
+        print("read_file_csv %s error: %s" % (path, str(e)))
+    return csv_object

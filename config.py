@@ -1,4 +1,7 @@
-slack_channel = "CAF8QRX4N"     #rc_monitor: C80G17TM1;     test-api: CAF8QRX4N
+slack = {
+    "token": '********',
+    "channel": "*******"     #rc_monitor: C80G17TM1;     test-api: CAF8QRX4N
+}
 
 email_receiver = ["******"]
 
@@ -13,4 +16,16 @@ aws_mysql = {
     "user": "root",
     "pwd": "****",
     "db": "monitor"
+}
+
+# step: [category, case_name]
+autotest_category = {
+    "normal purchase": {
+        '1': ['2', 'Test Cases/RC/Login/TC_Login'],
+        '2': ['3', 'Test Cases/RC/Billing/TC_Purchase_NormalFlow']
+    },
+    "post ad with credit": {
+        '1': ['1', 'Test Cases/RC/Login/TC_Login'],
+        '2': ['1', 'Test Cases/RC/Billing/TC_Purchase_NormalFlow']
+    }
 }

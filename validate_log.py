@@ -16,7 +16,7 @@ def string_toDatetime(string):
     return datetime.strptime(string, "%d/%b/%Y:%H:%M:%S")
 
 #read txt
-def validate_log(server, last_log_time='', slack_channel=None, email_receivers=None):
+def validate_log(server, last_log_time='', slack=None, email_receivers=None):
     list_error_log = []
     filePath = baseDir + server + "\\paymentgateway.access.log"
     totalLogs = 0
@@ -61,7 +61,7 @@ def validate_log(server, last_log_time='', slack_channel=None, email_receivers=N
             except Exception as e:
                 print('send email error:' + e)
             
-        if slack_channel != None:
+        if slack != None:
             try:
                 title = '<!here>, this is Online Payment Failed Notification'
                 attachments = [
@@ -73,7 +73,7 @@ def validate_log(server, last_log_time='', slack_channel=None, email_receivers=N
                         "ts": int(time.time())
                     }
                 ]
-                send_slack.send_slack(slack_channel, title, attachments)
+                send_slack.send_slack(slack["token"], slack["channel"], title, attachments)
             except Exception as e:
                 print('send slack error:' + str(e))
     else:
