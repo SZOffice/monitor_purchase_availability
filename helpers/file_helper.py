@@ -7,7 +7,6 @@ def read_file_all(path):
     try:
         file_object = open(path)
         context = file_object.read()
-        #print(persons)
     except:
         print("read_file_all error:" + path)
     finally:
@@ -26,6 +25,15 @@ def read_file_lines(path):
         file_object.close()
     return lines
     
+def save_file(path, context):
+    try:
+        file_object = open(path, 'w')
+        file_object.write(context)
+    except:
+        print("save_file error:" + path)
+    finally:
+        file_object.close()
+
 def read_file_json(path):
     json_object = {}
     try:

@@ -1,13 +1,16 @@
 slack = {
-    "token": '********',
-    "channel": "*******"     #rc_monitor: C80G17TM1;     test-api: CAF8QRX4N
+    "token": '{{data.slack.token}}',
+    "channel": "{{data.slack.channel}}"     #rc_monitor: C80G17TM1;     test-api: CAF8QRX4N
 }
 
-email_receiver = ["******"]
+email_receiver = {{data.email.receiver}}
 
-dir_base = r"D:\Sycee\ci_jenkins\monitor_purchase"
-#path_katalon_report = dir_base + r"\test-automation-jobsdb\project\Reports\{0}\TS_RC_AvailabilityOfPackageSelection\{1}\report.csv"
+{% if data.env == "dev" %}
 path_katalon_report = r".\logs\TS_RC_AvailabilityOfPackageSelection\{1}\report.csv"
+{% else %}
+dir_base = r"D:\Sycee\ci_jenkins\monitor_purchase"
+path_katalon_report = dir_base + r"\test-automation-jobsdb\project\Reports\{0}\TS_RC_AvailabilityOfPackageSelection\{1}\report.csv"
+{% endif %}
 
 nginx_server = {
     "Preview": {
@@ -23,9 +26,9 @@ nginx_server = {
 }
 
 aws_mysql = {
-    "host": "**********",
+    "host": "{{data.aws_mysql.host}}",
     "user": "root",
-    "pwd": "****",
+    "pwd": "{{data.aws_mysql.pwd}}",
     "db": "monitor"
 }
 

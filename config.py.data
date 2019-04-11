@@ -1,0 +1,14 @@
+{
+    "env": "dev",
+    "slack": {
+        "token": "***",
+        "channel": "***"
+    },
+    "email": {
+        "receiver": ["***"]
+    },
+    "aws_mysql": {
+        "host": "***",
+        "pwd": "***"
+    }
+}
