@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="TS_RC_AvailabilityOfPackageSelection" time="106" tests="2" failures="0" errors="0">
+   <testsuite name="TS_RC_AvailabilityOfPackageSelection" tests="2" failures="0" errors="0" time="106" timestamp="2019-04-10 16:19:32" hostname="CDCJOBSDEV9$ - sisdatabase" id="Test Suites/Preview/TS_RC_AvailabilityOfPackageSelection">
+      <properties>
+         <property name="deviceName" value=""/>
+         <property name="devicePlatform" value=""/>
+         <property name="logFolder" value="D:\\Sycee\\ci_jenkins\\monitor_purchase\\test-automation-jobsdb\\project\\Reports\\Preview\\TS_RC_AvailabilityOfPackageSelection\\20190410_161927"/>
+         <property name="logFiles" value="D:\\Sycee\\ci_jenkins\\monitor_purchase\\test-automation-jobsdb\\project\\Reports\\Preview\\TS_RC_AvailabilityOfPackageSelection\\20190410_161927\\execution0.log"/>
+         <property name="attachments" value="D:\\Sycee\\ci_jenkins\\monitor_purchase\\test-automation-jobsdb\\project\\Reports\\Preview\\TS_RC_AvailabilityOfPackageSelection\\20190410_161927\\1554884393875.png"/>
+         <property name="hostName" value="CDCJOBSDEV9$ - sisdatabase"/>
+         <property name="os" value="Windows Server 2012 R2 64bit"/>
+         <property name="katalonVersion" value="6.1.0.1"/>
+         <property name="browser" value="Chrome 72.0.3626.121"/>
+         <property name="hostAddress" value="10.1.9.50"/>
+         <property name="sessionId" value="fc1f6e5870b011bc7ca9728add3b9dc1"/>
+         <property name="seleniumVersion" value="3.7.1"/>
+         <property name="proxyInformation" value="ProxyInformation{proxyOption=NO_PROXY, proxyServerType=HTTP, password=, proxyServerAddress=, proxyServerPort=0}"/>
+         <property name="platform" value="Windows Server 2012 R2"/>
+      </properties>
+      <testcase name="Test Cases/RC/Purchase/TC_PackageSelection" classname="Test Cases/RC/Purchase/TC_PackageSelection" status="PASSED">
+         <system-out><![CDATA[2019-04-10 16:19:37 - [TEST_CASE][PASSED] - Test Cases/RC/Purchase/TC_PackageSelection: Test Cases/RC/Purchase/TC_PackageSelection
+
+2019-04-10 16:19:37 - [TEST_STEP][PASSED] - Start listener action : browserBeforeTestCase: null
+
+2019-04-10 16:19:37 - [TEST_STEP][PASSED] - setOneTimeBrowserConfig(): null
+
+2019-04-10 16:19:37 - [TEST_STEP][PASSED] - if (hasSetBrowserConfig): null
+
+2019-04-10 16:19:37 - [TEST_STEP][PASSED] - return null: null
+
+2019-04-10 16:19:37 - [TEST_STEP][PASSED] - Start setup action : LoginRC: Method 'LoginRC' complete successfully
+
+2019-04-10 16:19:38 - [TEST_STEP][PASSED] - callTestCase(findTestCase("RC/Login/TC_Login"), [:], STOP_ON_FAILURE): Call Test Case 'Test Cases/RC/Login/TC_Login' successfully
+
+2019-04-10 16:19:38 - [TEST_CASE][PASSED] - Test Cases/RC/Login/TC_Login: Test Cases/RC/Login/TC_Login
+
+2019-04-10 16:19:39 - [TEST_STEP][PASSED] - common = new com.jobsdb.common.CommonKeywords(): null
+
+2019-04-10 16:19:39 - [TEST_STEP][PASSED] - login = new com.jobsdb.rc.login.Login(): null
+
+2019-04-10 16:19:39 - [TEST_STEP][PASSED] - header = new com.jobsdb.rc.Header(): null
+
+2019-04-10 16:19:39 - [TEST_STEP][PASSED] - omniture = new com.jobsdb.common.Omniture(): null
+
+2019-04-10 16:19:39 - [TEST_STEP][PASSED] - loginTestData = new com.jobsdb.rc.login.LoginData(): null
+
+2019-04-10 16:19:39 - [TEST_STEP][PASSED] - RC_Url = common.GetTestEnv($GlobalVariable.G_env, "RC", $GlobalVariable.G_countryCode_RC): null
+
+2019-04-10 16:19:39 - [TEST_STEP][PASSED] - loginData = loginTestData.GetLoginData(accountType): null
+
+2019-04-10 16:19:39 - [TEST_STEP][PASSED] - navigateToUrl(RC_Url): Navigate to 'https://v8.preview.rms.jobsdb.com/hk' successfully
+
+2019-04-10 16:19:45 - [MESSAGE][PASSED] - Navigate to 'https://v8.preview.rms.jobsdb.com/hk' successfully
+
+2019-04-10 16:19:45 - [TEST_STEP][PASSED] - omniture.AssertOmnitureEnabled(): Execute JavaScript 'var hasError = false; try { s.pageName == '' } catch(e) { hasError = true } return hasError' successfully
+
+2019-04-10 16:19:45 - [MESSAGE][PASSED] - Execute JavaScript 'var hasError = false; try { s.pageName == '' } catch(e) { hasError = true } return hasError' successfully
+
+2019-04-10 16:19:45 - [TEST_STEP][PASSED] - if (!(login.IsLoggedIn())): Object 'Object Repository/RC/Header/Profile/HeaderEmpName' is visible
+
+2019-04-10 16:19:48 - [MESSAGE][INFO] - Unable to find the element located by 'By.xpath: //*[@id = 'label_welcomeEmp']'. Please recheck the objects properties to make sure the desired element is located. 
+
+2019-04-10 16:19:48 - [MESSAGE][WARNING] - Object 'Object Repository/RC/Header/Profile/HeaderEmpName' is not present after 3 second(s)
+
+2019-04-10 16:19:48 - [TEST_STEP][PASSED] - login.AssertRCLoginPage(): Object 'Object Repository/RC/Login/LoginPage/LoginButton' is visible
+
+2019-04-10 16:19:49 - [MESSAGE][PASSED] - Object 'Object Repository/RC/Login/LoginPage/LoginButton' is visible
+
+2019-04-10 16:19:49 - [TEST_STEP][PASSED] - login.LoginRC(loginData): Object: 'Object Repository/RC/Login/LoginPage/LoginButton' is clicked on
+
+2019-04-10 16:19:49 - [MESSAGE][PASSED] - Text 'tester+HK@seekasia.com' is set on object 'Object Repository/RC/Login/LoginPage/UsernameField'
+
+2019-04-10 16:19:49 - [MESSAGE][PASSED] - Text 'Tester1234' is set on object 'Object Repository/RC/Login/LoginPage/PasswordField'
+
+2019-04-10 16:19:50 - [MESSAGE][PASSED] - Object: 'Object Repository/RC/Login/LoginPage/LoginButton' is clicked on
+
+2019-04-10 16:19:50 - [TEST_STEP][PASSED] - common.TakeActionWithRetry({ -> ... }, null, 3): Object 'Object Repository/RC/Header/Profile/HeaderEmpName' is visible
+
+2019-04-10 16:19:53 - [MESSAGE][PASSED] - Object 'Object Repository/RC/Header/Profile/HeaderEmpName' is visible
+
+2019-04-10 16:19:53 - [TEST_STEP][PASSED] - if (!(header.IsNavHeaderVisible())): Object 'Object Repository/RC/Header/Profile/HeaderEmpName' is visible
+
+2019-04-10 16:19:54 - [MESSAGE][WARNING] - Object 'Object Repository/RC/Header/NavHeader/NavHeader' is NOT visible (Root cause: com.kms.katalon.core.exception.StepFailedException: Object 'Object Repository/RC/Header/NavHeader/NavHeader' is NOT visible
+	at com.kms.katalon.core.webui.keyword.internal.WebUIKeywordMain.stepFailed(WebUIKeywordMain.groovy:64)
+	at com.kms.katalon.core.webui.keyword.builtin.VerifyElementVisibleKeyword$_verifyElementVisible_closure1.doCall(VerifyElementVisibleKeyword.groovy:83)
+	at com.kms.katalon.core.webui.keyword.builtin.VerifyElementVisibleKeyword$_verifyElementVisible_closure1.call(VerifyElementVisibleKeyword.groovy)
+	at com.kms.katalon.core.webui.keyword.internal.WebUIKeywordMain.runKeyword(WebUIKeywordMain.groovy:20)
+	at com.kms.katalon.core.webui.keyword.builtin.VerifyElementVisibleKeyword.verifyElementVisible(VerifyElementVisibleKeyword.groovy:97)
+	at com.kms.katalon.core.webui.keyword.builtin.VerifyElementVisibleKeyword.execute(VerifyElementVisibleKeyword.groovy:67)
+	at com.kms.katalon.core.keyword.internal.KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.groovy:56)
+	at com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords.verifyElementVisible(WebUiBuiltInKeywords.groovy:358)
+	at com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords$verifyElementVisible$4.call(Unknown Source)
+	at com.jobsdb.rc.Header.IsNavHeaderVisible(Header.groovy:31)
+	at com.jobsdb.rc.Header$IsNavHeaderVisible$0.call(Unknown Source)
+	at TC_Login.run(TC_Login:47)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:331)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:322)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:301)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:293)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:227)
+	at com.kms.katalon.core.main.TestCaseMain.runTestCase(TestCaseMain.java:114)
+	at com.kms.katalon.core.keyword.builtin.CallTestCaseKeyword$_callTestCase_closure1.doCall(CallTestCaseKeyword.groovy:59)
+	at com.kms.katalon.core.keyword.builtin.CallTestCaseKeyword$_callTestCase_closure1.call(CallTestCaseKeyword.groovy)
+	at com.kms.katalon.core.keyword.internal.KeywordMain.runKeyword(KeywordMain.groovy:66)
+	at com.kms.katalon.core.keyword.builtin.CallTestCaseKeyword.callTestCase(CallTestCaseKeyword.groovy:81)
+	at com.kms.katalon.core.keyword.builtin.CallTestCaseKeyword.execute(CallTestCaseKeyword.groovy:44)
+	at com.kms.katalon.core.keyword.internal.KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.groovy:56)
+	at com.kms.katalon.core.keyword.BuiltinKeywords.callTestCase(BuiltinKeywords.groovy:334)
+	at Script1554191403652.LoginRC(Script1554191403652.groovy:22)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptMethodAsRawText(ScriptEngine.java:133)
+	at com.kms.katalon.core.main.TestCaseExecutor.runMethod(TestCaseExecutor.java:341)
+	at com.kms.katalon.core.main.TestCaseExecutor.runMethod(TestCaseExecutor.java:453)
+	at com.kms.katalon.core.main.TestCaseExecutor.internallyRunMethods(TestCaseExecutor.java:439)
+	at com.kms.katalon.core.main.TestCaseExecutor.processSetupPhase(TestCaseExecutor.java:162)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:289)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:227)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:129)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:112)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:81)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:157)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1554884367761.run(TempTestSuite1554884367761.groovy:35)
+)
+[[ATTACHMENT|D:\\Sycee\\ci_jenkins\\monitor_purchase\\test-automation-jobsdb\\project\\Reports\\Preview\\TS_RC_AvailabilityOfPackageSelection\\20190410_161927\\1554884393875.png]]
+
+2019-04-10 16:19:54 - [TEST_STEP][PASSED] - login.SelectAccount(loginData): Object 'Object Repository/RC/Header/NavHeader/NavHeader' is visible
+
+2019-04-10 16:20:05 - [MESSAGE][PASSED] - Object: 'Object Repository/RC/Login/SelectAccountPage/SelectAccount' is clicked on
+
+2019-04-10 16:20:05 - [MESSAGE][PASSED] - Object 'Object Repository/RC/Header/NavHeader/NavHeader' is visible
+
+2019-04-10 16:20:05 - [TEST_STEP][PASSED] - header.AssertHeaderEmpNameVisible(): Object 'Object Repository/RC/Header/Profile/HeaderEmpName' is visible
+
+2019-04-10 16:20:05 - [MESSAGE][PASSED] - Object 'Object Repository/RC/Header/Profile/HeaderEmpName' is visible
+
+2019-04-10 16:20:05 - [MESSAGE][PASSED] - Call Test Case 'Test Cases/RC/Login/TC_Login' successfully
+
+2019-04-10 16:20:05 - [MESSAGE][PASSED] - Method 'LoginRC' complete successfully
+
+2019-04-10 16:20:05 - [TEST_STEP][PASSED] - PurchaseOnline = new com.jobsdb.rc.purchase.PurchaseOnline(): null
+
+2019-04-10 16:20:05 - [TEST_STEP][PASSED] - header = new com.jobsdb.rc.Header(): null
+
+2019-04-10 16:20:05 - [TEST_STEP][PASSED] - header.GoToRCHomepage(): Object 'Object Repository/RC/Header/NavHeader/HomeTab_Selected' is clickable
+
+2019-04-10 16:20:06 - [MESSAGE][PASSED] - Object 'Object Repository/RC/Header/HeaderJobsDBLogo' is clickable
+
+2019-04-10 16:20:15 - [MESSAGE][PASSED] - Object: 'Object Repository/RC/Header/HeaderJobsDBLogo' is clicked on
+
+2019-04-10 16:20:15 - [MESSAGE][PASSED] - Object 'Object Repository/RC/Header/NavHeader/HomeTab_Selected' is clickable
+
+2019-04-10 16:20:15 - [TEST_STEP][PASSED] - header.GoToPackageSelection(): Delayed 2 second(s)
+
+2019-04-10 16:20:18 - [MESSAGE][PASSED] - Object: 'Object Repository/RC/Header/NavHeader/PurchaseOnlineTab' is clicked on
+
+2019-04-10 16:20:20 - [MESSAGE][PASSED] - Delayed 2 second(s)
+
+2019-04-10 16:20:20 - [TEST_STEP][PASSED] - if (PurchaseOnline.IsPackageListExisted()): null
+
+2019-04-10 16:20:20 - [MESSAGE][PASSED] - Web element with id: 'Object Repository/RC/Loading/PageWrapper' located by 'By.xpath: //*[@id = 'TB_wrapper']' is not present after '2' second(s)
+
+2019-04-10 16:20:20 - [MESSAGE][PASSED] - Object 'Object Repository/RC/Purchase/PackageSelection/PurchaseHome' is visible
+
+2019-04-10 16:20:20 - [TEST_STEP][PASSED] - if (header.AbleBuyNow()): Delayed 15 second(s)
+
+2019-04-10 16:20:20 - [MESSAGE][PASSED] - Object 'Object Repository/RC/Purchase/PackageSelection/BuyNow_Recomm' is visible
+
+2019-04-10 16:20:20 - [TEST_STEP][PASSED] - header.GoToCheckOut(): Delayed 2 second(s)
+
+2019-04-10 16:20:21 - [MESSAGE][PASSED] - Object: 'Object Repository/RC/Purchase/PackageSelection/BuyNow_Recomm' is clicked on
+
+2019-04-10 16:20:23 - [MESSAGE][PASSED] - Delayed 2 second(s)
+
+2019-04-10 16:20:23 - [TEST_STEP][PASSED] - delay(15): Delayed 15 second(s)
+
+2019-04-10 16:20:38 - [MESSAGE][PASSED] - Delayed 15 second(s)
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - Start listener action : browserAfterTestCase: null
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - if (isRunningSingleTestCase): null]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/RC/Purchase/TC_CheckOut" classname="Test Cases/RC/Purchase/TC_CheckOut" status="PASSED">
+         <system-out><![CDATA[2019-04-10 16:20:38 - [TEST_CASE][PASSED] - Test Cases/RC/Purchase/TC_CheckOut: Test Cases/RC/Purchase/TC_CheckOut
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - Start listener action : browserBeforeTestCase: null
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - setOneTimeBrowserConfig(): null
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - if (hasSetBrowserConfig): null
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - return null: null
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - Start setup action : LoginRC: Method 'LoginRC' complete successfully
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - callTestCase(findTestCase("RC/Login/TC_Login"), [:], STOP_ON_FAILURE): Call Test Case 'Test Cases/RC/Login/TC_Login' successfully
+
+2019-04-10 16:20:38 - [TEST_CASE][PASSED] - Test Cases/RC/Login/TC_Login: Test Cases/RC/Login/TC_Login
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - common = new com.jobsdb.common.CommonKeywords(): null
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - login = new com.jobsdb.rc.login.Login(): null
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - header = new com.jobsdb.rc.Header(): null
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - omniture = new com.jobsdb.common.Omniture(): null
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - loginTestData = new com.jobsdb.rc.login.LoginData(): null
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - RC_Url = common.GetTestEnv($GlobalVariable.G_env, "RC", $GlobalVariable.G_countryCode_RC): null
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - loginData = loginTestData.GetLoginData(accountType): null
+
+2019-04-10 16:20:38 - [TEST_STEP][PASSED] - navigateToUrl(RC_Url): Navigate to 'https://v8.preview.rms.jobsdb.com/hk' successfully
+
+2019-04-10 16:20:47 - [MESSAGE][PASSED] - Navigate to 'https://v8.preview.rms.jobsdb.com/hk' successfully
+
+2019-04-10 16:20:47 - [TEST_STEP][PASSED] - omniture.AssertOmnitureEnabled(): Execute JavaScript 'var hasError = false; try { s.pageName == '' } catch(e) { hasError = true } return hasError' successfully
+
+2019-04-10 16:20:47 - [MESSAGE][PASSED] - Execute JavaScript 'var hasError = false; try { s.pageName == '' } catch(e) { hasError = true } return hasError' successfully
+
+2019-04-10 16:20:47 - [TEST_STEP][PASSED] - if (!(login.IsLoggedIn())): Object 'Object Repository/RC/Header/Profile/HeaderEmpName' is present
+
+2019-04-10 16:20:47 - [MESSAGE][PASSED] - Object 'Object Repository/RC/Header/Profile/HeaderEmpName' is present
+
+2019-04-10 16:20:47 - [MESSAGE][PASSED] - Call Test Case 'Test Cases/RC/Login/TC_Login' successfully
+
+2019-04-10 16:20:47 - [MESSAGE][PASSED] - Method 'LoginRC' complete successfully
+
+2019-04-10 16:20:47 - [TEST_STEP][PASSED] - CheckOutDetails = new com.jobsdb.rc.purchase.CheckOut(): null
+
+2019-04-10 16:20:47 - [TEST_STEP][PASSED] - header = new com.jobsdb.rc.Header(): null
+
+2019-04-10 16:20:47 - [TEST_STEP][PASSED] - header.GoToRCHomepage(): Object 'Object Repository/RC/Header/NavHeader/HomeTab_Selected' is clickable
+
+2019-04-10 16:20:47 - [MESSAGE][PASSED] - Object 'Object Repository/RC/Header/HeaderJobsDBLogo' is clickable
+
+2019-04-10 16:20:56 - [MESSAGE][PASSED] - Object: 'Object Repository/RC/Header/HeaderJobsDBLogo' is clicked on
+
+2019-04-10 16:20:56 - [MESSAGE][PASSED] - Object 'Object Repository/RC/Header/NavHeader/HomeTab_Selected' is clickable
+
+2019-04-10 16:20:56 - [TEST_STEP][PASSED] - header.GoToPackageSelection(): Delayed 2 second(s)
+
+2019-04-10 16:20:58 - [MESSAGE][PASSED] - Object: 'Object Repository/RC/Header/NavHeader/PurchaseOnlineTab' is clicked on
+
+2019-04-10 16:21:00 - [MESSAGE][PASSED] - Delayed 2 second(s)
+
+2019-04-10 16:21:00 - [TEST_STEP][PASSED] - if (header.AbleBuyNow()): null
+
+2019-04-10 16:21:00 - [MESSAGE][PASSED] - Object 'Object Repository/RC/Purchase/PackageSelection/BuyNow_Recomm' is visible
+
+2019-04-10 16:21:00 - [TEST_STEP][PASSED] - header.GoToCheckOut(): Delayed 2 second(s)
+
+2019-04-10 16:21:01 - [MESSAGE][PASSED] - Object: 'Object Repository/RC/Purchase/PackageSelection/BuyNow_Recomm' is clicked on
+
+2019-04-10 16:21:03 - [MESSAGE][PASSED] - Delayed 2 second(s)
+
+2019-04-10 16:21:03 - [TEST_STEP][PASSED] - if (CheckOutDetails.IsChekoutDetailsExisted()): null
+
+2019-04-10 16:21:03 - [MESSAGE][PASSED] - Web element with id: 'Object Repository/RC/Loading/PageWrapper' located by 'By.xpath: //*[@id = 'TB_wrapper']' is not present after '2' second(s)
+
+2019-04-10 16:21:03 - [MESSAGE][PASSED] - Object 'Object Repository/RC/Purchase/CheckOut/CheckOutContent' is visible
+
+2019-04-10 16:21:03 - [TEST_STEP][PASSED] - if (CheckOutDetails.IsPayOnlineVisiable()): Delayed 15 second(s)
+
+2019-04-10 16:21:03 - [MESSAGE][PASSED] - Object 'Object Repository/RC/Purchase/CheckOut/Btn_PayOnline' is visible
+
+2019-04-10 16:21:03 - [TEST_STEP][PASSED] - CheckOutDetails.GoToPayOnline(): Object: 'Object Repository/RC/Purchase/CheckOut/Btn_PayOnline' is clicked on
+
+2019-04-10 16:21:04 - [MESSAGE][PASSED] - Object: 'Object Repository/RC/Purchase/CheckOut/Btn_PayOnline' is clicked on
+
+2019-04-10 16:21:04 - [TEST_STEP][PASSED] - delay(15): Delayed 15 second(s)
+
+2019-04-10 16:21:19 - [MESSAGE][PASSED] - Delayed 15 second(s)
+
+2019-04-10 16:21:19 - [TEST_STEP][PASSED] - Start listener action : browserAfterTestCase: null
+
+2019-04-10 16:21:19 - [TEST_STEP][PASSED] - if (isRunningSingleTestCase): null]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <system-out><![CDATA[2019-04-10 16:19:32 - [TEST_SUITE][PASSED] - TS_RC_AvailabilityOfPackageSelection: Test Cases/RC/Purchase/TC_CheckOut]]></system-out>
+      <system-err><![CDATA[]]></system-err>
+   </testsuite>
+</testsuites>

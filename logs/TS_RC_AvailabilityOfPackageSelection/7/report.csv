@@ -1,0 +1,22 @@
+Suite/Test/Step Name,Browser,Description,Start time,End time,Duration,Status
+TS_RC_AvailabilityOfPackageSelection,Chrome 72.0.3626.121,,2019-04-10 16:19:32,2019-04-10 16:21:19,1m - 46.974s,PASSED
+,,,,,,
+Test Cases/RC/Purchase/TC_PackageSelection,Chrome 72.0.3626.121,,2019-04-10 16:19:37,2019-04-10 16:20:38,1m - 0.563s,PASSED
+Start listener action : browserBeforeTestCase,Chrome 72.0.3626.121,,2019-04-10 16:19:37,2019-04-10 16:19:37,0.013s,PASSED
+Start setup action : LoginRC,Chrome 72.0.3626.121,,2019-04-10 16:19:37,2019-04-10 16:20:05,28.368s,PASSED
+PurchaseOnline = new com.jobsdb.rc.purchase.PurchaseOnline(),Chrome 72.0.3626.121,,2019-04-10 16:20:05,2019-04-10 16:20:05,0.010s,PASSED
+header = new com.jobsdb.rc.Header(),Chrome 72.0.3626.121,,2019-04-10 16:20:05,2019-04-10 16:20:05,0.002s,PASSED
+header.GoToRCHomepage(),Chrome 72.0.3626.121,,2019-04-10 16:20:05,2019-04-10 16:20:15,9.777s,PASSED
+header.GoToPackageSelection(),Chrome 72.0.3626.121,,2019-04-10 16:20:15,2019-04-10 16:20:20,4.644s,PASSED
+if (PurchaseOnline.IsPackageListExisted()),Chrome 72.0.3626.121,,2019-04-10 16:20:20,2019-04-10 16:20:38,17.674s,PASSED
+Start listener action : browserAfterTestCase,Chrome 72.0.3626.121,,2019-04-10 16:20:38,2019-04-10 16:20:38,0.002s,PASSED
+,,,,,,
+Test Cases/RC/Purchase/TC_CheckOut,Chrome 72.0.3626.121,,2019-04-10 16:20:38,2019-04-10 16:21:19,40.991s,PASSED
+Start listener action : browserBeforeTestCase,Chrome 72.0.3626.121,,2019-04-10 16:20:38,2019-04-10 16:20:38,0.004s,PASSED
+Start setup action : LoginRC,Chrome 72.0.3626.121,,2019-04-10 16:20:38,2019-04-10 16:20:47,9.587s,PASSED
+CheckOutDetails = new com.jobsdb.rc.purchase.CheckOut(),Chrome 72.0.3626.121,,2019-04-10 16:20:47,2019-04-10 16:20:47,0.011s,PASSED
+header = new com.jobsdb.rc.Header(),Chrome 72.0.3626.121,,2019-04-10 16:20:47,2019-04-10 16:20:47,0.002s,PASSED
+header.GoToRCHomepage(),Chrome 72.0.3626.121,,2019-04-10 16:20:47,2019-04-10 16:20:56,9.090s,PASSED
+header.GoToPackageSelection(),Chrome 72.0.3626.121,,2019-04-10 16:20:56,2019-04-10 16:21:00,4.086s,PASSED
+if (header.AbleBuyNow()),Chrome 72.0.3626.121,,2019-04-10 16:21:00,2019-04-10 16:21:19,18.183s,PASSED
+Start listener action : browserAfterTestCase,Chrome 72.0.3626.121,,2019-04-10 16:21:19,2019-04-10 16:21:19,0.002s,PASSED
