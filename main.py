@@ -11,7 +11,7 @@ now = datetime.datetime.now()
 now_str = now.strftime("%Y-%m-%d %H:%M:%S")
 now_id = now.strftime("%Y%m%d%H%M%S")
 
-def validate_purchase_ui(config, country, reportId, sql_insert_data_list=[]):
+def validate_purchase_ui(config, env, country, reportId, sql_insert_data_list=[]):
     with open(config.path_katalon_report.format(env, reportId)) as csvfile:
         readCSV = csv.reader(csvfile, delimiter=',')
 
@@ -49,15 +49,15 @@ def validate_purchase_ui(config, country, reportId, sql_insert_data_list=[]):
                     sql_insert_data_list.append((now_id, country, step, item[0], 2, '', now_str))
     return sql_insert_data_list
             
-def validate_payment_log(config, sql_insert_data_list=[], is_skip=False):    
+def validate_payment_log(config, env, country, sql_insert_data_list=[], is_skip=False):    
     error_log = ""
     if is_skip == False:
         log_data = file_helper.read_file_json('log_data.json')
-        for server in config.nginx_server[country]:
+        for server in config.nginx_server[env][country]:
             print(server)
         
             last_log_time = log_helper.get_payment_lastlogtime(log_data, server)
-            (last_log_time, list_error_log) = validate_log.validate_log(server, last_log_time, slack=config.slack, email_receivers=config.email_receiver)    
+            (last_log_time, list_error_log) = validate_log.validate_log(server, country, last_log_time, slack=config.slack, email_receivers=config.email_receiver)    
             print(last_log_time)
             log_data = log_helper.update_payment_lastlogtime(log_data, server, last_log_time)
             if len(list_error_log) > 0:
@@ -76,7 +76,7 @@ if __name__ == "__main__":
     args = sys.argv[1:]
     if not args:
         print("not args")
-        env='preview'
+        env='Preview'
         country='HK'
         report_id='7'
     else:
@@ -87,8 +87,8 @@ if __name__ == "__main__":
 
     sql_insert_data_list = []
 
-    is_success_purchase_ui = validate_purchase_ui(config, country, report_id, sql_insert_data_list)
-    sql_insert_data_list = validate_payment_log(config, sql_insert_data_list, (not is_success_purchase_ui))
+    is_success_purchase_ui = validate_purchase_ui(config, env, country, report_id, sql_insert_data_list)
+    sql_insert_data_list = validate_payment_log(config, env, country, sql_insert_data_list, (not is_success_purchase_ui))
     print("sql_insert_data_list: %s" % sql_insert_data_list)
     
     '''

@@ -3,7 +3,7 @@
 ::call plink.exe -ssh -pw **** -l idc\agentservice hknginx3 cd /tmp;vi 3.TalentSearch.jobsdb.com.access.log;cd /var/log/nginx;cat jobsdb.com.access.log | grep TalentSearch >> .TalentSearch.jobsdb.com.access.log; 
 
 
-set pscp="D:\Program Files\PuTTY\pscp.exe"s
+set pscp="D:\Program Files\PuTTY\pscp.exe"
 set base=D:\Sycee\ci_jenkins\monitor_purchase\analyse_report\
 set base_log=%base%logs\s
 set confirm="%base%confirm.txt"

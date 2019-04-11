@@ -10,17 +10,20 @@ now = datetime.now()
 baseDir = 'logs\\'
 if not os.path.exists(baseDir):
     baseDir = 'D:\\Sycee\\ci_jenkins\\payment-log\\logs\\'
-list_server = ["hknginx3", "hknginx4", "hknginx5", "idnginx3", "idnginx4", "thnginx3", "thnginx4"]
   
 def string_toDatetime(string):
     return datetime.strptime(string, "%d/%b/%Y:%H:%M:%S")
 
+def validate_log_db(country, purchase_order_ref):
+    print("country: %s, purchase_order_ref: %s" % (country, purchase_order_ref))
+
 #read txt
-def validate_log(server, last_log_time='', slack=None, email_receivers=None):
+def validate_log(server, country, last_log_time='', slack=None, email_receivers=None):
     list_error_log = []
     filePath = baseDir + server + "\\paymentgateway.access.log"
     totalLogs = 0
 
+    print("log filePath: %s" % filePath)
     lines = file_helper.read_file_lines(filePath)
     totalLogs = len(lines)
     for line in lines:
@@ -34,6 +37,7 @@ def validate_log(server, last_log_time='', slack=None, email_receivers=None):
                 isOnline = False
                 for ref in query_ref:
                     if ref.startswith('PPL'):
+                        validate_log_db(country, ref.split('_')[0])
                         isOnline = True
                 if isOnline:
                     list_error_log.append(line)
@@ -87,8 +91,10 @@ if __name__ == "__main__":
     
     t = time.time()
     
+    #list_server = ["hknginx3", "hknginx4", "hknginx5", "idnginx3", "idnginx4", "thnginx3", "thnginx4"]
+    list_server = ["hknginx3", "hknginx4", "hknginx5"]
     for server in list_server:
-        validate_log(server)
+        validate_log(server, 'HK')
 
     print("total run time:")
     e = time.time()
