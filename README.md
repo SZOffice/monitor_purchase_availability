@@ -1,7 +1,9 @@
-# monitor_purchase_availability
-#### base python3
+# monitor_purchase_availability 
+---
 
-#Generate config file
-'''
+#### base python3 
+
+#### Generate config file
+```
 python helpers/gen_helper.py
-'''
+```

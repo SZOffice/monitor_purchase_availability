@@ -6,10 +6,10 @@ slack = {
 email_receiver = {{data.email.receiver}}
 
 {% if data.env == "dev" %}
-path_katalon_report = r".\logs\TS_RC_AvailabilityOfPackageSelection\{1}\report.csv"
+path_katalon_report = r"./logs/TS_RC_AvailabilityOfPackageSelection/{1}/report.csv"
 {% else %}
-dir_base = r"D:\Sycee\ci_jenkins\monitor_purchase"
-path_katalon_report = dir_base + r"\test-automation-jobsdb\project\Reports\{0}\TS_RC_AvailabilityOfPackageSelection\{1}\report.csv"
+dir_base = r"D:/Sycee/ci_jenkins/monitor_purchase"
+path_katalon_report = dir_base + r"/test-automation-jobsdb/project/Reports/{0}/TS_RC_AvailabilityOfPackageSelection\{1}\report.csv"
 {% endif %}
 
 nginx_server = {

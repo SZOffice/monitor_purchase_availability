@@ -21,7 +21,7 @@ if __name__ == "__main__":
     
     t = time.time()
 
-    baseDir = sys.path[0] + '\\..\\'
+    baseDir = sys.path[0] + '/../'
     gen_config(baseDir + "config.py.template", baseDir + "config.py.data", baseDir + "config.py")
 
     print("total run time:")
