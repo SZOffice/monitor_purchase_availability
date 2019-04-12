@@ -35,7 +35,7 @@ def validate_log_db(env, country, purchase_order_ref):
     return log_type
 
 #read txt
-def validate_log(server, env, country, last_log_time='', slack=None, email_receivers=None):
+def validate_log(server, env, country, last_log_time='', is_send_slack=False, is_send_email=False):
     list_error_log = []
     filePath = config.path_nginx_paymentgateway_log.format(server)
     totalLogs = 0
@@ -61,7 +61,7 @@ def validate_log(server, env, country, last_log_time='', slack=None, email_recei
                         
     if len(list_error_log) > 0:
         print("exists error log: %s" % str(list_error_log))
-        if email_receivers != None:
+        if is_send_email:
             subject = "Monitor: Payment gateway exists error in %s at %s" % (server, now.strftime('%Y%m%d'))
             body_html = [
                 """
@@ -74,7 +74,6 @@ def validate_log(server, env, country, last_log_time='', slack=None, email_recei
             body_text = """ Total Logs: %s \t\n Total errors: %s \t\n\t\n Error list: \t\n\t\n %s
                 """ % (str(totalLogs), str(len(list_error_log)), '\t\n'.join(list_error_log))
         
-            print('receivers:' + str(email_receivers))
             print('start send email...')
             try:
                 from_addr = config.email["from_addr"]
@@ -83,7 +82,7 @@ def validate_log(server, env, country, last_log_time='', slack=None, email_recei
             except Exception as e:
                 print('send email error:' + e)
             
-        if slack != None:
+        if is_send_slack:
             try:
                 title = '<!here>, this is Online Payment Failed Notification'
                 attachments = [
@@ -95,7 +94,7 @@ def validate_log(server, env, country, last_log_time='', slack=None, email_recei
                         "ts": int(time.time())
                     }
                 ]
-                send_slack.send_slack(slack["token"], slack["channel"], title, attachments)
+                send_slack.send_slack(config.slack["token"], config.slack["channel"], title, attachments)
             except Exception as e:
                 print('send slack error:' + str(e))
     else:
@@ -111,7 +110,7 @@ def validate_payment_log(env, country, sql_insert_data_list=[], is_skip=False):
             print(server)
         
             last_log_time = log_helper.get_payment_lastlogtime(log_data, server)
-            (last_log_time, list_error_log) = validate_log(server, env, country, last_log_time, slack=config.slack, email_receivers=config.email_receiver)    
+            (last_log_time, list_error_log) = validate_log(server, env, country, last_log_time, True, True)    
             print(last_log_time)
             log_data = log_helper.update_payment_lastlogtime(log_data, server, last_log_time)
             if len(list_error_log) > 0:

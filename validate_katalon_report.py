@@ -11,7 +11,7 @@ now = datetime.datetime.now()
 now_str = now.strftime("%Y-%m-%d %H:%M:%S")
 now_id = now.strftime("%Y%m%d%H%M%S")
 
-def validate_purchase_ui(env, country, reportId, sql_insert_data_list=[]):
+def validate_purchase_ui(env, country, reportId, sql_insert_data_list=[], is_send_slack=False):
     with open(config.path_katalon_report.format(env, reportId)) as csvfile:
         readCSV = csv.reader(csvfile, delimiter=',')
 
@@ -29,7 +29,7 @@ def validate_purchase_ui(env, country, reportId, sql_insert_data_list=[]):
                         sql_insert_data_list.append((now_id, country, step, item[0], 1, '', now_str))
                     else:
                         print('katalon failed: country=%s, step=%s, case=%s' % (country, step, item[1]))
-                        if config.slack != None:
+                        if is_send_slack:
                             try:
                                 title = '<!here>, this is Katalon failed notification with purchase availability'
                                 attachments = [

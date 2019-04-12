@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
     sql_insert_data_list = []
 
-    is_success_purchase_ui = validate_katalon_report.validate_purchase_ui(env, country, report_id, sql_insert_data_list)    
+    is_success_purchase_ui = validate_katalon_report.validate_purchase_ui(env, country, report_id, sql_insert_data_list, True)    
     sql_insert_data_list = validate_datafeed_log.validate_payment_log(env, country, sql_insert_data_list, (not is_success_purchase_ui))
     print("sql_insert_data_list: %s" % sql_insert_data_list)
     
