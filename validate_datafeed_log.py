@@ -6,9 +6,12 @@ import helpers.file_helper as file_helper
 import helpers.send_email as send_email
 import helpers.send_slack as send_slack
 import helpers.sql_helper as sql_helper
+import helpers.log_helper as log_helper
 import config
 
 now = datetime.now()
+now_str = now.strftime("%Y-%m-%d %H:%M:%S")
+now_id = now.strftime("%Y%m%d%H%M%S")
   
 def string_toDatetime(string):
     return datetime.strptime(string, "%d/%b/%Y:%H:%M:%S")
@@ -74,8 +77,8 @@ def validate_log(server, env, country, last_log_time='', slack=None, email_recei
             print('receivers:' + str(email_receivers))
             print('start send email...')
             try:
-                from_addr = "ifelse01@126.com"
-                send_email.send_email(from_addr, email_receivers, subject, body_text)
+                from_addr = config.email["from_addr"]
+                send_email.send_email(from_addr, config.email["receivers"], subject, body_text)
                 #send_email.send_email(from_addr, email_receivers, subject, body_html, True)
             except Exception as e:
                 print('send email error:' + e)
@@ -99,6 +102,29 @@ def validate_log(server, env, country, last_log_time='', slack=None, email_recei
         print("validated pass")
     return (last_log_time, list_error_log)
     
+def validate_payment_log(env, country, sql_insert_data_list=[], is_skip=False):    
+    error_log = ""
+    log_path = config.validate_nginx_paymentgateway_log
+    if is_skip == False:
+        log_data = file_helper.read_file_json(log_path)        
+        for server in config.nginx_server[env][country]:
+            print(server)
+        
+            last_log_time = log_helper.get_payment_lastlogtime(log_data, server)
+            (last_log_time, list_error_log) = validate_log(server, env, country, last_log_time, slack=config.slack, email_receivers=config.email_receiver)    
+            print(last_log_time)
+            log_data = log_helper.update_payment_lastlogtime(log_data, server, last_log_time)
+            if len(list_error_log) > 0:
+                error_log = error_log + str(list_error_log)    
+        print(log_data)
+        file_helper.save_file_json(log_path, log_data)
+
+        sql_insert_data_list.append((now_id, country, 3, 3, (0 if error_log!='' else 1), error_log, now_str))
+    else:
+        sql_insert_data_list.append((now_id, country, 3, 3, 2, '', now_str))
+
+    return sql_insert_data_list
+
 if __name__ == "__main__":
     args = sys.argv[1:]
     if not args:

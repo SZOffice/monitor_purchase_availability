@@ -5,7 +5,8 @@
         "channel": "CAF8QRX4N"
     },
     "email": {
-        "receiver": ["****"]
+        "from_addr": "****",
+        "receivers": ["****"]
     },
     "jobsdb_mssql": {
         "Production": {
