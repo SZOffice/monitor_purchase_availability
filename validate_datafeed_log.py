@@ -81,6 +81,8 @@ def validate_log(server, env, country, last_log_time='', is_send_slack=False, is
                 #send_email.send_email(from_addr, email_receivers, subject, body_html, True)
             except Exception as e:
                 print('send email error:' + e)
+            finally:
+                print('end send email...')
             
         if is_send_slack:
             try:
