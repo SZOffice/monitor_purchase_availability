@@ -57,7 +57,7 @@ def validate_payment_log(config, env, country, sql_insert_data_list=[], is_skip=
             print(server)
         
             last_log_time = log_helper.get_payment_lastlogtime(log_data, server)
-            (last_log_time, list_error_log) = validate_log.validate_log(server, country, last_log_time, slack=config.slack, email_receivers=config.email_receiver)    
+            (last_log_time, list_error_log) = validate_log.validate_log(server, env, country, last_log_time, slack=config.slack, email_receivers=config.email_receiver)    
             print(last_log_time)
             log_data = log_helper.update_payment_lastlogtime(log_data, server, last_log_time)
             if len(list_error_log) > 0:
@@ -92,13 +92,13 @@ if __name__ == "__main__":
     print("sql_insert_data_list: %s" % sql_insert_data_list)
     
     '''
-    ms_Conn = sql_helper.MYSQL(host=config.aws_mysql["host"], user=config.aws_mysql["user"], pwd=config.aws_mysql["pwd"], db=config.aws_mysql["db"])    
+    my_Conn = sql_helper.MYSQL(host=config.aws_sycee_monitor_mysql["host"], user=config.aws_sycee_monitor_mysql["user"], pwd=config.aws_sycee_monitor_mysql["pwd"], db=config.aws_sycee_monitor_mysql["db"])    
     insert_sql = """
         Insert into jobsdb_payment(batch_id, country_code, user_journey, category, response_status, remark, monitor_time, created_time, last_updated_time) 
         VALUES (%s, %s, %s, %s, %s, %s, %s, now(), now())
         """
-    ms_Conn.ExecManyQuery(insert_sql, sql_insert_data_list)
+    my_Conn.ExecManyQuery(insert_sql, sql_insert_data_list)
     '''
     sql = "SELECT * FROM jobsdb_payment"
-    #reslist = ms_Conn.ExecQuery(sql)
+    #reslist = my_Conn.ExecQuery(sql)
     

@@ -7,8 +7,8 @@ def read_file_all(path):
     try:
         file_object = open(path)
         context = file_object.read()
-    except:
-        print("read_file_all error:" + path)
+    except Exception as e:
+        print("read_file_all %s error: %s" % (path, str(e)))
     finally:
         file_object.close()
     return context
@@ -19,8 +19,8 @@ def read_file_lines(path):
         file_object = open(path)
         lines = file_object.readlines()
         #print(persons)
-    except:
-        print("read_file_lines error:" + path)
+    except Exception as e:
+        print("read_file_all %s error: %s" % (path, str(e)))
     finally:
         file_object.close()
     return lines
@@ -29,8 +29,8 @@ def save_file(path, context):
     try:
         file_object = open(path, 'w')
         file_object.write(context)
-    except:
-        print("save_file error:" + path)
+    except Exception as e:
+        print("save_file %s error: %s" % (path, e))
     finally:
         file_object.close()
 
@@ -47,8 +47,8 @@ def save_file_json(path, context):
     try:
         with open(path, 'w') as json_file:
             json.dump(context, json_file, ensure_ascii=False)
-    except:
-        print("save_file_json error:" + path)
+    except Exception as e:
+        print("save_file_json %s error: %s" % (path, str(e)))
 
 def read_file_csv(path):
     csv_object = []

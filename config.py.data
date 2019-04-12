@@ -1,14 +1,38 @@
 {
     "env": "dev",
     "slack": {
-        "token": "***",
-        "channel": "***"
+        "token": "****",
+        "channel": "CAF8QRX4N"
     },
     "email": {
-        "receiver": ["***"]
+        "receiver": ["****"]
     },
-    "aws_mysql": {
-        "host": "***",
-        "pwd": "***"
+    "jobsdb_mssql": {
+        "Production": {
+            "HK": {
+                "host": "****",
+                "user": "****",
+                "pwd": "****",
+                "db": "****"
+            },
+            "ID": {
+                "host": "****",
+                "user": "****",
+                "pwd": "****",
+                "db": "****"
+            },
+            "TH": {
+                "host": "****",
+                "user": "****",
+                "pwd": "****",
+                "db": "****"
+            }
+        }
+    },
+    "aws_sycee_monitor_mysql": {
+        "host": "****",
+        "user": "****",
+        "pwd": "****",
+        "db": "****"
     }
 }

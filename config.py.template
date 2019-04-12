@@ -11,6 +11,7 @@ path_katalon_report = r"./logs/TS_RC_AvailabilityOfPackageSelection/{1}/report.c
 dir_base = r"D:/Sycee/ci_jenkins/monitor_purchase"
 path_katalon_report = dir_base + r"/test-automation-jobsdb/project/Reports/{0}/TS_RC_AvailabilityOfPackageSelection\{1}\report.csv"
 {% endif %}
+path_nginx_paymentgateway_log = r"./logs/{0}/paymentgateway.access.log"
 
 nginx_server = {
     "Preview": {
@@ -25,12 +26,9 @@ nginx_server = {
     }
 }
 
-aws_mysql = {
-    "host": "{{data.aws_mysql.host}}",
-    "user": "root",
-    "pwd": "{{data.aws_mysql.pwd}}",
-    "db": "monitor"
-}
+jobsdb_mssql = {{data.jobsdb_mssql}}
+
+aws_sycee_monitor_mysql = {{data.aws_sycee_monitor_mysql}}
 
 # step: [category, case_name]
 autotest_category = {

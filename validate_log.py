@@ -5,22 +5,36 @@ from datetime import datetime
 import helpers.file_helper as file_helper
 import helpers.send_email as send_email
 import helpers.send_slack as send_slack
+import helpers.sql_helper as sql_helper
+import config
 
 now = datetime.now()
-baseDir = 'logs\\'
-if not os.path.exists(baseDir):
-    baseDir = 'D:\\Sycee\\ci_jenkins\\payment-log\\logs\\'
   
 def string_toDatetime(string):
     return datetime.strptime(string, "%d/%b/%Y:%H:%M:%S")
 
-def validate_log_db(country, purchase_order_ref):
+def validate_log_db(env, country, purchase_order_ref):
     print("country: %s, purchase_order_ref: %s" % (country, purchase_order_ref))
+    db_info = config.jobsdb_mssql[env][country]
+    ms_Conn = sql_helper.MSSQL(host=db_info["host"], user=db_info["user"], pwd=db_info["pwd"], db=db_info["db"])    
+    sql = "SELECT IsNull(JobAdId, 0) as JobAdId FROM EmpEPaymentLog Where PurchaseOrderRef=N'%s'" % purchase_order_ref
+    result_list =  ms_Conn.ExecQuery(sql)
+    log_type = 0    #0:no record  1:normal purchase  2:post jobad purchase
+    if len(result_list) == 0:
+        print("not found purchase ref %s in database-EmpEPaymentLog." % purchase_order_ref)
+    else:
+        if result_list[0][0] == 0:
+            log_type = 1
+            print("online - normal purchase")
+        else:
+            log_type = 2
+            print("online - post jobad purchase")
+    return log_type
 
 #read txt
-def validate_log(server, country, last_log_time='', slack=None, email_receivers=None):
+def validate_log(server, env, country, last_log_time='', slack=None, email_receivers=None):
     list_error_log = []
-    filePath = baseDir + server + "\\paymentgateway.access.log"
+    filePath = config.path_nginx_paymentgateway_log.format(server)
     totalLogs = 0
 
     print("log filePath: %s" % filePath)
@@ -37,12 +51,13 @@ def validate_log(server, country, last_log_time='', slack=None, email_receivers=
                 isOnline = False
                 for ref in query_ref:
                     if ref.startswith('PPL'):
-                        validate_log_db(country, ref.split('_')[0])
+                        #log_type = validate_log_db(env, country, ref.split('_')[0])
                         isOnline = True
                 if isOnline:
                     list_error_log.append(line)
                         
-    if len(list_error_log) > 0:        
+    if len(list_error_log) > 0:
+        print("exists error log: %s" % str(list_error_log))
         if email_receivers != None:
             subject = "Monitor: Payment gateway exists error in %s at %s" % (server, now.strftime('%Y%m%d'))
             body_html = [
@@ -94,7 +109,7 @@ if __name__ == "__main__":
     #list_server = ["hknginx3", "hknginx4", "hknginx5", "idnginx3", "idnginx4", "thnginx3", "thnginx4"]
     list_server = ["hknginx3", "hknginx4", "hknginx5"]
     for server in list_server:
-        validate_log(server, 'HK')
+        validate_log(server, 'Production', 'HK')
 
     print("total run time:")
     e = time.time()
