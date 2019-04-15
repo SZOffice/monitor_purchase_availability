@@ -107,14 +107,18 @@ def validate_payment_log(env, country, sql_insert_data_list=[], is_skip=False):
     error_log = ""
     log_path = config.validate_nginx_paymentgateway_log
     if is_skip == False:
-        log_data = file_helper.read_file_json(log_path)        
+        log_data = file_helper.read_file_json(log_path)
         for server in config.nginx_server[env][country]:
             print(server)
         
-            last_log_time = log_helper.get_payment_lastlogtime(log_data, server)
+            helper = log_helper.LogFileHelper()
+            last_log_time = helper.get_payment_lastlogtime(log_data, server)
+            #helper = log_helper.LogDBHelper(config.local_sqlite3)
+            #last_log_time = helper.get_payment_lastlogtime(server)
             (last_log_time, list_error_log) = validate_log(server, env, country, last_log_time, True, True)    
             print(last_log_time)
-            log_data = log_helper.update_payment_lastlogtime(log_data, server, last_log_time)
+            log_data = helper.update_payment_lastlogtime(log_data, server, last_log_time)
+            #helper.update_payment_lastlogtime(server, last_log_time)
             if len(list_error_log) > 0:
                 error_log = error_log + str(list_error_log)    
         print(log_data)
