@@ -5,11 +5,13 @@ import helpers.file_helper as file_helper
 import helpers.log_helper as log_helper
 import helpers.sql_helper as sql_helper
 import helpers.send_slack as send_slack
+import helpers.logger_helper as logger_helper
 import config
 
 now = datetime.datetime.now()
 now_str = now.strftime("%Y-%m-%d %H:%M:%S")
 now_id = now.strftime("%Y%m%d%H%M%S")
+logger = logger_helper.mylog('validate_katalon_report').getlog()
 
 def validate_purchase_ui(env, country, reportId, sql_insert_data_list=[], is_send_slack=False):
     with open(config.path_katalon_report.format(env, reportId)) as csvfile:
@@ -25,10 +27,10 @@ def validate_purchase_ui(env, country, reportId, sql_insert_data_list=[], is_sen
                             is_success = True
                             break
                     if is_success:
-                        print('katalon passed: country=%s, step=%s, case=%s' % (country, step, item[1]))
+                        logger.info('katalon passed: country=%s, step=%s, case=%s' % (country, step, item[1]))
                         sql_insert_data_list.append((now_id, country, step, item[0], 1, '', now_str))
                     else:
-                        print('katalon failed: country=%s, step=%s, case=%s' % (country, step, item[1]))
+                        logger.info('katalon failed: country=%s, step=%s, case=%s' % (country, step, item[1]))
                         if is_send_slack:
                             try:
                                 title = '<!here>, this is Katalon failed notification with purchase availability'
@@ -43,11 +45,11 @@ def validate_purchase_ui(env, country, reportId, sql_insert_data_list=[], is_sen
                                 ]
                                 send_slack.send_slack(config.slack["token"], config.slack["channel"], title, attachments)
                             except Exception as e:
-                                print('send slack error:' + str(e))
+                                logger.error('send slack error:' + str(e))
                         sql_insert_data_list.append((now_id, country, step, item[0], 0, '', now_str))
                         step_go = False
                 else:
-                    print('Skip: country=%s, step=%s, case=%s' % (country, step, item[1]))
+                    logger.info('Skip: country=%s, step=%s, case=%s' % (country, step, item[1]))
                     sql_insert_data_list.append((now_id, country, step, item[0], 2, '', now_str))
     return sql_insert_data_list
 
@@ -55,7 +57,7 @@ if __name__ == "__main__":
     #init data what need (format data&time, env, country)
     args = sys.argv[1:]
     if not args:
-        print("not args")
+        logger.info("not args")
         env='Preview'
         country='HK'
         report_id='7'
@@ -63,10 +65,10 @@ if __name__ == "__main__":
         env = args[0]
         country = args[1]
         report_id = args[2]
-    print("env:{0}, country:{1}, report_id:{2}".format(env, country, report_id))
+    logger.info("env:{0}, country:{1}, report_id:{2}".format(env, country, report_id))
 
     sql_insert_data_list = []
 
     is_success_purchase_ui = validate_purchase_ui(env, country, report_id, sql_insert_data_list)
-    print("sql_insert_data_list: %s" % sql_insert_data_list)
+    logger.info("sql_insert_data_list: %s" % sql_insert_data_list)
     
