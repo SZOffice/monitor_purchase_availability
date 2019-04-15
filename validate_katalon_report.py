@@ -46,6 +46,8 @@ def validate_purchase_ui(env, country, reportId, sql_insert_data_list=[], is_sen
                                 send_slack.send_slack(config.slack["token"], config.slack["channel"], title, attachments)
                             except Exception as e:
                                 logger.error('send slack error:' + str(e))
+                            finally:
+                                logger.info('end send slack...')
                         sql_insert_data_list.append((now_id, country, step, item[0], 0, '', now_str))
                         step_go = False
                 else:
