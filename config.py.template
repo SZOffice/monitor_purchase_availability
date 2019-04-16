@@ -27,6 +27,8 @@ nginx_server = {
     }
 }
 
+local_sqlite3 = r"./logs/local_sqlite3.db"
+
 jobsdb_mssql = {{data.jobsdb_mssql}}
 
 aws_sycee_monitor_mysql = {{data.aws_sycee_monitor_mysql}}
