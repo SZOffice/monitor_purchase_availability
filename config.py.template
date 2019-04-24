@@ -6,10 +6,10 @@ slack = {
 email = {{data.email}}
 
 {% if data.env == "dev" %}
-path_katalon_report = r"./logs/TS_RC_AvailabilityOfPackageSelection/{1}/report.csv"
+path_katalon_report = r"./logs/{0}/{1}/{2}/report.csv"
 {% else %}
-dir_base = r"D:/Sycee/ci_jenkins/monitor_purchase"
-path_katalon_report = dir_base + r"/test-automation-jobsdb/project/Reports/{0}/TS_RC_AvailabilityOfPackageSelection\{1}\report.csv"
+dir_base = r"D:/Sycee/monitor_purchase"
+path_katalon_report = dir_base + r"/test-automation-jobsdb/project/Reports/{0}/{1}/{2}/report.csv"
 {% endif %}
 path_nginx_paymentgateway_log = r"./logs/{0}/paymentgateway.access.log"
 validate_nginx_paymentgateway_log = r"./logs/log_validate_nginx_paymentgateway_log.json"
@@ -34,15 +34,25 @@ jobsdb_mssql = {{data.jobsdb_mssql}}
 aws_sycee_monitor_mysql = {{data.aws_sycee_monitor_mysql}}
 
 # step: [category, case_name]
-autotest_category = {
-    "normal purchase": {
-        '1': ['2', 'Test Cases/RC/Purchase/TC_PackageSelection'],
-        '2': ['3', 'Test Cases/RC/Purchase/TC_CheckOut']
+
+# step: [category, case_name]
+autotest_category = [
+    {
+        "type": 3,
+        "name": "TS_RC_AvailabilityOfPackageSelection",
+        "steps": {
+            '1': ['2', 'Test Cases/RC/Purchase/TC_PackageSelection'],
+            '2': ['3', 'Test Cases/RC/Purchase/TC_CheckOut']
+        },
+        "status": 1
+    }, 
+    {
+        "type": 9,
+        "name": "TS_RC_AvailabilityOfPackageSelection",
+        "steps": {
+            '1': ['2', 'Test Cases/RC/Purchase/TC_PackageSelection'],
+            '2': ['3', 'Test Cases/RC/Purchase/TC_CheckOut']
+        },
+        "status": 0
     }
-}
-'''
-autotest_category["post ad with credit"] = {
-    '1': ['1', 'Test Cases/RC/Login/TC_Login'],
-    '2': ['1', 'Test Cases/RC/Billing/TC_Purchase_NormalFlow']
-}
-'''
+]

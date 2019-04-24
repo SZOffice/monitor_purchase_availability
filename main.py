@@ -28,19 +28,22 @@ if __name__ == "__main__":
     logger.info("env:{0}, country:{1}, report_id:{2}".format(env, country, report_id))
 
     sql_insert_data_list = []
-
-    is_success_purchase_ui = validate_katalon_report.validate_purchase_ui(env, country, report_id, sql_insert_data_list, True)    
-    sql_insert_data_list = validate_datafeed_log.validate_payment_log(env, country, sql_insert_data_list, (not is_success_purchase_ui))
+    validate_info = []
+    for category in config.autotest_category:
+        if category["status"] == 1:
+            report_path = config.path_katalon_report.format(env, category["name"], report_id)
+            is_success_purchase_ui = validate_katalon_report.validate_purchase_ui(category["steps"], country, report_path, sql_insert_data_list, True)    
+            validate_info.append({
+                "type": category["type"],
+                "is_skip": (not is_success_purchase_ui)
+            })
+    sql_insert_data_list = validate_datafeed_log.validate_payment_log(env, country, validate_info, sql_insert_data_list)
     logger.info("sql_insert_data_list: %s" % sql_insert_data_list)
     
-    '''
     my_Conn = sql_helper.MYSQL(host=config.aws_sycee_monitor_mysql["host"], user=config.aws_sycee_monitor_mysql["user"], pwd=config.aws_sycee_monitor_mysql["pwd"], db=config.aws_sycee_monitor_mysql["db"])    
     insert_sql = """
-        Insert into jobsdb_payment(batch_id, country_code, user_journey, category, response_status, remark, monitor_time, created_time, last_updated_time) 
+        Insert into jobsdb_purchase(batch_id, country_code, user_journey, category, response_status, remark, monitor_time, created_time, last_updated_time) 
         VALUES (%s, %s, %s, %s, %s, %s, %s, now(), now())
         """
     my_Conn.ExecManyQuery(insert_sql, sql_insert_data_list)
-    '''
-    sql = "SELECT * FROM jobsdb_payment"
-    #reslist = my_Conn.ExecQuery(sql)
     

@@ -22,23 +22,24 @@ def validate_log_db(env, country, purchase_order_ref):
     logger.info("country: %s, purchase_order_ref: %s" % (country, purchase_order_ref))
     db_info = config.jobsdb_mssql[env][country]
     ms_Conn = sql_helper.MSSQL(host=db_info["host"], user=db_info["user"], pwd=db_info["pwd"], db=db_info["db"])    
-    sql = "SELECT IsNull(JobAdId, 0) as JobAdId FROM EmpEPaymentLog Where PurchaseOrderRef=N'%s'" % purchase_order_ref
+    sql = "SELECT IsNull(JobAdId, 0) as JobAdId FROM EmpEPaymentLog With(Nolock) Where PurchaseOrderRef=N'%s'" % purchase_order_ref
     result_list =  ms_Conn.ExecQuery(sql)
     log_type = 0    #0:no record  1:normal purchase  2:post jobad purchase
     if len(result_list) == 0:
         logger.info("not found purchase ref %s in database-EmpEPaymentLog." % purchase_order_ref)
     else:
         if result_list[0][0] == 0:
-            log_type = 1
+            log_type = 3
             logger.info("online - normal purchase")
         else:
-            log_type = 2
+            log_type = 9
             logger.info("online - post jobad purchase")
     return log_type
 
 #read txt
 def validate_log(server, env, country, last_log_time='', is_send_slack=False, is_send_email=False):
     list_error_log = []
+    list_error_type = []
     filePath = config.path_nginx_paymentgateway_log.format(server)
     totalLogs = 0
 
@@ -56,7 +57,7 @@ def validate_log(server, env, country, last_log_time='', is_send_slack=False, is
                 isOnline = False
                 for ref in query_ref:
                     if ref.startswith('PPL'):
-                        #log_type = validate_log_db(env, country, ref.split('_')[0])
+                        list_error_type.append(validate_log_db(env, country, ref.split('_')[0]))
                         isOnline = True
                 if isOnline:
                     list_error_log.append(line)
@@ -103,32 +104,40 @@ def validate_log(server, env, country, last_log_time='', is_send_slack=False, is
                 logger.error('send slack error:' + str(e))
     else:
         logger.info("validated pass")
-    return (last_log_time, list_error_log)
+    return (last_log_time, list_error_log, list_error_type)
     
-def validate_payment_log(env, country, sql_insert_data_list=[], is_skip=False):    
+def validate_payment_log(env, country, validate_info, sql_insert_data_list=[]):    
     error_log = ""
     log_path = config.validate_nginx_paymentgateway_log
-    if is_skip == False:
-        log_data = file_helper.read_file_json(log_path)
-        for server in config.nginx_server[env][country]:
-            logger.info(server)
-        
-            helper = log_helper.LogFileHelper()
-            last_log_time = helper.get_payment_lastlogtime(log_data, server)
-            #helper = log_helper.LogDBHelper(config.local_sqlite3)
-            #last_log_time = helper.get_payment_lastlogtime(server)
-            (last_log_time, list_error_log) = validate_log(server, env, country, last_log_time, True, True)    
-            logger.info(last_log_time)
-            log_data = helper.update_payment_lastlogtime(log_data, server, last_log_time)
-            #helper.update_payment_lastlogtime(server, last_log_time)
-            if len(list_error_log) > 0:
-                error_log = error_log + str(list_error_log)    
-        logger.info(log_data)
-        file_helper.save_file_json(log_path, log_data)
+    log_data = file_helper.read_file_json(log_path)
+    error_type = []
+    for server in config.nginx_server[env][country]:
+        logger.info(server)
+    
+        helper = log_helper.LogFileHelper()
+        last_log_time = helper.get_payment_lastlogtime(log_data, server)
+        #helper = log_helper.LogDBHelper(config.local_sqlite3)
+        #last_log_time = helper.get_payment_lastlogtime(server)
+        (last_log_time, list_error_log, list_error_type) = validate_log(server, env, country, last_log_time, True, True)    
+        logger.info(last_log_time)
+        log_data = helper.update_payment_lastlogtime(log_data, server, last_log_time)
+        #helper.update_payment_lastlogtime(server, last_log_time)
+        if len(list_error_log) > 0:
+            error_log = error_log + str(list_error_log)    
+            error_type.extend(list_error_type)
+    logger.info(log_data)
+    file_helper.save_file_json(log_path, log_data)
 
-        sql_insert_data_list.append((now_id, country, 3, 3, (0 if error_log!='' else 1), error_log, now_str))
-    else:
-        sql_insert_data_list.append((now_id, country, 3, 3, 2, '', now_str))
+    logger.info("error_type:" + str(error_type))
+    for info in validate_info:
+        cur_type = info["type"]
+        if info["is_skip"]:
+            sql_insert_data_list.append((now_id, country, cur_type, 3, 2, '', now_str))
+        else:
+            if cur_type in error_type:
+                sql_insert_data_list.append((now_id, country, cur_type, 3, (0 if error_log!='' else 1), error_log, now_str))
+            else:
+                sql_insert_data_list.append((now_id, country, cur_type, 3, 1, '', now_str))
 
     return sql_insert_data_list
 
