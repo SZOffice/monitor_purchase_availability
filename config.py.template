@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from enums import user_journery, category
+
 slack = {
     "token": '{{data.slack.token}}',
     "channel": "{{data.slack.channel}}"     #rc_monitor: C80G17TM1;     test-api: CAF8QRX4N
@@ -34,25 +37,24 @@ jobsdb_mssql = {{data.jobsdb_mssql}}
 aws_sycee_monitor_mysql = {{data.aws_sycee_monitor_mysql}}
 
 # step: [category, case_name]
-
-# step: [category, case_name]
 autotest_category = [
     {
-        "type": 3,
+        "type": user_journery.Normal_PaymentLog,
         "name": "TS_RC_AvailabilityOfPackageSelection",
         "steps": {
-            '1': ['2', 'Test Cases/RC/Purchase/TC_PackageSelection'],
-            '2': ['3', 'Test Cases/RC/Purchase/TC_CheckOut']
+            user_journery.Normal_PackageSelect: [category.OKR2, 'Test Cases/RC/Purchase/TC_PackageSelection'],
+            user_journery.Normal_Checkout: [category.OKR3, 'Test Cases/RC/Purchase/TC_CheckOut']
         },
         "status": 1
     }, 
     {
-        "type": 9,
+        "type": user_journery.PostJob_PaymentLog,
         "name": "TS_RC_AvailabilityOfPackageSelection",
         "steps": {
-            '1': ['2', 'Test Cases/RC/Purchase/TC_PackageSelection'],
-            '2': ['3', 'Test Cases/RC/Purchase/TC_CheckOut']
+            user_journery.PostJob_WriteJobAd: [category.OKR1, 'Test Cases/RC/JobPosting/TC_JobPosting_NoCredit_Step1'],
+            user_journery.PostJob_PromoteJobAd: [category.OKR1, 'Test Cases/RC/JobPosting/TC_JobPosting_NoCredit_Step2'],
+            user_journery.PostJob_Checkout: [category.OKR1, 'Test Cases/RC/JobPosting/TC_JobPosting_NoCredit_Step3']
         },
-        "status": 0
+        "status": 1
     }
-]
+] 

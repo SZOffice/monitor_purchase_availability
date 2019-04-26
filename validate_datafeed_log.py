@@ -9,6 +9,7 @@ import helpers.sql_helper as sql_helper
 import helpers.log_helper as log_helper
 import helpers.logger_helper as logger_helper
 import config
+from enums import status, category, user_journery
 
 now = datetime.now()
 now_str = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -29,10 +30,10 @@ def validate_log_db(env, country, purchase_order_ref):
         logger.info("not found purchase ref %s in database-EmpEPaymentLog." % purchase_order_ref)
     else:
         if result_list[0][0] == 0:
-            log_type = 3
+            log_type = user_journery.Normal_PaymentLog
             logger.info("online - normal purchase")
         else:
-            log_type = 9
+            log_type = user_journery.PostJob_PaymentLog
             logger.info("online - post jobad purchase")
     return log_type
 
@@ -133,12 +134,12 @@ def validate_payment_log(env, country, validate_info, sql_insert_data_list=[]):
     for info in validate_info:
         cur_type = info["type"]
         if info["is_skip"] or total_log == 0:
-            sql_insert_data_list.append((now_id, country, cur_type, 3, 2, ('skip validate' if info["is_skip"] else 'no payment log'), now_str))
+            sql_insert_data_list.append((now_id, country, cur_type, category.OKR3, status.NotValid, ('skip validate' if info["is_skip"] else 'no payment log'), now_str))
         else:
             if cur_type in error_type:
-                sql_insert_data_list.append((now_id, country, cur_type, 3, (0 if error_log!='' else 1), error_log, now_str))
+                sql_insert_data_list.append((now_id, country, cur_type, category.OKR3, (status.Failed if error_log!='' else status.Success), error_log, now_str))
             else:
-                sql_insert_data_list.append((now_id, country, cur_type, 3, 1, '', now_str))
+                sql_insert_data_list.append((now_id, country, cur_type, category.OKR3, status.Success, '', now_str))
 
     return sql_insert_data_list
 

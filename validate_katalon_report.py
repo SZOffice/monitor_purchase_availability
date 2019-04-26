@@ -7,6 +7,7 @@ import helpers.sql_helper as sql_helper
 import helpers.send_slack as send_slack
 import helpers.logger_helper as logger_helper
 import config
+from enums import status
 
 now = datetime.datetime.now()
 now_str = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -27,7 +28,7 @@ def validate_purchase_ui(steps, country, report_path, sql_insert_data_list=[], i
                         break
                 if is_success:
                     logger.info('katalon passed: country=%s, step=%s, case=%s' % (country, step, item[1]))
-                    sql_insert_data_list.append((now_id, country, step, item[0], 1, '', now_str))
+                    sql_insert_data_list.append((now_id, country, step, item[0], status.Success, '', now_str))
                 else:
                     logger.info('katalon failed: country=%s, step=%s, case=%s' % (country, step, item[1]))
                     if is_send_slack:
@@ -47,11 +48,11 @@ def validate_purchase_ui(steps, country, report_path, sql_insert_data_list=[], i
                             logger.error('send slack error:' + str(e))
                         finally:
                             logger.info('end send slack...')
-                    sql_insert_data_list.append((now_id, country, step, item[0], 0, '', now_str))
+                    sql_insert_data_list.append((now_id, country, step, item[0], status.Failed, '', now_str))
                     step_go = False
             else:
                 logger.info('Skip: country=%s, step=%s, case=%s' % (country, step, item[1]))
-                sql_insert_data_list.append((now_id, country, step, item[0], 2, '', now_str))
+                sql_insert_data_list.append((now_id, country, step, item[0], status.NotValid, '', now_str))
     return sql_insert_data_list
 
 if __name__ == "__main__":
