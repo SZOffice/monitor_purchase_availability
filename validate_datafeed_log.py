@@ -45,11 +45,11 @@ def validate_log(server, env, country, last_log_time='', is_send_slack=False, is
 
     logger.info("log filePath: %s" % filePath)
     lines = file_helper.read_file_lines(filePath)
-    totalLogs = len(lines)
     for line in lines:
         log_time = line.split(' ')[0]
         if last_log_time == '' or string_toDatetime(last_log_time) < string_toDatetime(log_time):
             last_log_time = log_time
+            totalLogs = totalLogs + 1
             
             if "|200|" not in line:
                 url_query = line.split('|')[16]
@@ -104,13 +104,14 @@ def validate_log(server, env, country, last_log_time='', is_send_slack=False, is
                 logger.error('send slack error:' + str(e))
     else:
         logger.info("validated pass")
-    return (last_log_time, list_error_log, list_error_type)
+    return (totalLogs, last_log_time, list_error_log, list_error_type)
     
 def validate_payment_log(env, country, validate_info, sql_insert_data_list=[]):    
     error_log = ""
     log_path = config.validate_nginx_paymentgateway_log
     log_data = file_helper.read_file_json(log_path)
     error_type = []
+    total_log = 0
     for server in config.nginx_server[env][country]:
         logger.info(server)
     
@@ -118,7 +119,7 @@ def validate_payment_log(env, country, validate_info, sql_insert_data_list=[]):
         last_log_time = helper.get_payment_lastlogtime(log_data, server)
         #helper = log_helper.LogDBHelper(config.local_sqlite3)
         #last_log_time = helper.get_payment_lastlogtime(server)
-        (last_log_time, list_error_log, list_error_type) = validate_log(server, env, country, last_log_time, True, True)    
+        (total_log, last_log_time, list_error_log, list_error_type) = validate_log(server, env, country, last_log_time, True, True)    
         logger.info(last_log_time)
         log_data = helper.update_payment_lastlogtime(log_data, server, last_log_time)
         #helper.update_payment_lastlogtime(server, last_log_time)
@@ -131,8 +132,8 @@ def validate_payment_log(env, country, validate_info, sql_insert_data_list=[]):
     logger.info("error_type:" + str(error_type))
     for info in validate_info:
         cur_type = info["type"]
-        if info["is_skip"]:
-            sql_insert_data_list.append((now_id, country, cur_type, 3, 2, '', now_str))
+        if info["is_skip"] or total_log == 0:
+            sql_insert_data_list.append((now_id, country, cur_type, 3, 2, ('skip validate' if info["is_skip"] else 'no payment log'), now_str))
         else:
             if cur_type in error_type:
                 sql_insert_data_list.append((now_id, country, cur_type, 3, (0 if error_log!='' else 1), error_log, now_str))
