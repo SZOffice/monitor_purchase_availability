@@ -40,7 +40,7 @@ aws_sycee_monitor_mysql = {{data.aws_sycee_monitor_mysql}}
 autotest_category = [
     {
         "type": user_journery.Normal_PaymentLog,
-        "name": "TS_RC_AvailabilityOfPackageSelection",
+        "name": "TS_RC_AvailabilityOfOnlinePurchase",
         "steps": {
             user_journery.Normal_PackageSelect: [category.OKR2, 'Test Cases/RC/Purchase/TC_PackageSelection'],
             user_journery.Normal_Checkout: [category.OKR3, 'Test Cases/RC/Purchase/TC_CheckOut']
@@ -49,7 +49,7 @@ autotest_category = [
     }, 
     {
         "type": user_journery.PostJob_PaymentLog,
-        "name": "TS_RC_AvailabilityOfPackageSelection",
+        "name": "TS_RC_AvailabilityOfOnlinePurchase",
         "steps": {
             user_journery.PostJob_WriteJobAd: [category.OKR1, 'Test Cases/RC/JobPosting/TC_JobPosting_NoCredit_Step1'],
             user_journery.PostJob_PromoteJobAd: [category.OKR1, 'Test Cases/RC/JobPosting/TC_JobPosting_NoCredit_Step2'],
