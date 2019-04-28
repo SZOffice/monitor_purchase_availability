@@ -52,7 +52,7 @@ def validate_purchase_ui(steps, country, report_path, sql_insert_data_list=[], i
                     step_go = False
             else:
                 logger.info('Skip: country=%s, step=%s, case=%s' % (country, step, item[1]))
-                sql_insert_data_list.append((now_id, country, step, item[0], status.NotValid, '', now_str))
+                sql_insert_data_list.append((now_id, country, step, item[0], status.NotValid_Skip, '', now_str))
     return sql_insert_data_list
 
 if __name__ == "__main__":

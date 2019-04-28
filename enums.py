@@ -19,5 +19,6 @@ class category():
 class status():
     Failed = "0"
     Success = "1"
-    NotValid = "2"
+    NotValid_Skip = "2"
+    NotValid_NoLog = "3"
 #print(user_journery.PostJob_PaymentLog)
