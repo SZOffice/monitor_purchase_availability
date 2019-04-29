@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-  
 import os, sys, time
-import urllib
+import urllib, requests
 from datetime import datetime
 import helpers.file_helper as file_helper
 import helpers.send_email as send_email
@@ -18,6 +18,30 @@ logger = logger_helper.mylog('validate_datafeed_log').getlog()
   
 def string_toDatetime(string):
     return datetime.strptime(string, "%d/%b/%Y:%H:%M:%S")
+
+def call_datafeed(env, country):
+    postUrl = config.datafeed_url[env][country]
+    userAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36"
+    header = {
+        "Referer": "http://sycee.monitor.jobsdb.com",
+        'User-Agent': userAgent,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
+    }
+    postData = {
+        "Ref":"PPL00000",
+        "Amt": "0",
+        "PayRef": "000000000",
+        "payMethod": "VISA",
+        "remark": "pls ignore it"
+    }
+    
+    session = requests.session()
+    responseRes = session.post(postUrl, data = postData, headers = header)
+    print("statusCode:{}".format(responseRes.status_code))
+    #print(responseRes.text)
+    if responseRes.status_code == 200:
+        return session;
+    return '';
 
 def validate_log_db(env, country, purchase_order_ref):
     logger.info("country: %s, purchase_order_ref: %s" % (country, purchase_order_ref))
@@ -52,9 +76,12 @@ def validate_log(server, env, country, last_log_time='', is_send_slack=False, is
             last_log_time = log_time
             totalLogs = totalLogs + 1
             
-            if "|200|" not in line:
+            if ("|200|" not in line) and ("PPL00000" not in line):
                 url_query = line.split('|')[16]
-                query_ref = urllib.parse.parse_qs(url_query)["Ref"]
+                try:
+                    query_ref = urllib.parse.parse_qs(url_query)["Ref"]
+                except:
+                    query_ref = urllib.parse.parse_qs(url_query)["ref"]
                 isOnline = False
                 for ref in query_ref:
                     if ref.startswith('PPL'):
@@ -94,7 +121,7 @@ def validate_log(server, env, country, last_log_time='', is_send_slack=False, is
                 attachments = [
                     {
                         "pretext": "--------------",
-                        "title": "total:%s | error:%s" % (str(totalLogs), str(len(list_error_log))), 
+                        "title": "server:%s | total:%s | error:%s" % (server, str(totalLogs), str(len(list_error_log))), 
                         "text": '\n'.join(list_error_log), 
                         "color":"#7CD197",
                         "ts": int(time.time())
@@ -131,6 +158,7 @@ def validate_payment_log(env, country, validate_info, sql_insert_data_list=[]):
     file_helper.save_file_json(log_path, log_data)
 
     logger.info("error_type:" + str(error_type))
+    logger.info("total_log:" + str(total_log))
     for info in validate_info:
         cur_type = info["type"]
         if info["is_skip"] or total_log == 0:
@@ -150,10 +178,9 @@ if __name__ == "__main__":
     
     t = time.time()
     
-    #list_server = ["hknginx3", "hknginx4", "hknginx5", "idnginx3", "idnginx4", "thnginx3", "thnginx4"]
-    list_server = ["hknginx3", "hknginx4", "hknginx5"]
-    for server in list_server:
-        validate_log(server, 'Production', 'HK')
+    env='Production'
+    country='HK'
+    call_datafeed(env, country)
 
     logger.info("total run time:")
     e = time.time()

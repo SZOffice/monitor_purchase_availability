@@ -35,8 +35,9 @@ if __name__ == "__main__":
             is_success_purchase_ui = validate_katalon_report.validate_purchase_ui(category["steps"], country, report_path, sql_insert_data_list, True)    
             validate_info.append({
                 "type": category["type"],
-                "is_skip": (not is_success_purchase_ui)
+                "is_skip": False #(not is_success_purchase_ui)
             })
+    validate_datafeed_log.call_datafeed(env, country)
     sql_insert_data_list = validate_datafeed_log.validate_payment_log(env, country, validate_info, sql_insert_data_list)
     logger.info("sql_insert_data_list: %s" % sql_insert_data_list)
     

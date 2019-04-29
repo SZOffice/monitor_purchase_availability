@@ -36,6 +36,14 @@ jobsdb_mssql = {{data.jobsdb_mssql}}
 
 aws_sycee_monitor_mysql = {{data.aws_sycee_monitor_mysql}}
 
+datafeed_url = {
+    'Production': {
+        'HK': 'http://rms.jobsdb.com/hk/en/PaymentGatewayDataFeed/DataFeedRespond',
+        'ID': 'http://rms.jobsdb.co.id/id/en/PaymentGatewayDataFeed/DataFeedRespond',
+        'TH': 'http://rms.jobsdb.co.th/th/en/PaymentGatewayDataFeed/DataFeedRespond'
+    }
+}
+
 # step: [category, case_name]
 autotest_category = [
     {
