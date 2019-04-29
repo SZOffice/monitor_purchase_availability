@@ -4,7 +4,7 @@
 
 
 set pscp="D:\Program Files\PuTTY\pscp.exe"
-set base=D:\Sycee\ci_jenkins\monitor_purchase\analyse_report\
+set base=D:\Sycee\monitor_purchase\monitor_purchase_availability\
 set base_log=%base%logs\s
 set confirm="%base%confirm.txt"
 
