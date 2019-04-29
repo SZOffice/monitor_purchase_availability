@@ -118,6 +118,8 @@ def validate_log(server, env, country, last_log_time='', is_send_slack=False, is
         if is_send_slack:
             try:
                 title = '<!here>, this is Online Payment Failed Notification'
+                if 0 in list_error_type:
+                    title = title + '(not found purchase ref in DB)'
                 attachments = [
                     {
                         "pretext": "--------------",
@@ -147,10 +149,11 @@ def validate_payment_log(env, country, validate_info, sql_insert_data_list=[]):
         last_log_time = helper.get_payment_lastlogtime(log_data, server)
         #helper = log_helper.LogDBHelper(config.local_sqlite3)
         #last_log_time = helper.get_payment_lastlogtime(server)
-        (total_log, last_log_time, list_error_log, list_error_type) = validate_log(server, env, country, last_log_time, True, True)    
+        (total_log_server, last_log_time, list_error_log, list_error_type) = validate_log(server, env, country, last_log_time, True, True)    
         logger.info(last_log_time)
         log_data = helper.update_payment_lastlogtime(log_data, server, last_log_time)
         #helper.update_payment_lastlogtime(server, last_log_time)
+        total_log = total_log + total_log_server
         if len(list_error_log) > 0:
             error_log = error_log + str(list_error_log)    
             error_type.extend(list_error_type)
