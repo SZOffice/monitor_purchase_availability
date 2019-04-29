@@ -51,9 +51,10 @@ autotest_category = [
         "type": user_journery.PostJob_PaymentLog,
         "name": "TS_RC_AvailabilityOfOnlinePurchase",
         "steps": {
-            user_journery.PostJob_WriteJobAd: [category.OKR1, 'Test Cases/RC/JobPosting/TC_JobPosting_NoCredit_Step1'],
-            user_journery.PostJob_PromoteJobAd: [category.OKR1, 'Test Cases/RC/JobPosting/TC_JobPosting_NoCredit_Step2'],
-            user_journery.PostJob_Checkout: [category.OKR1, 'Test Cases/RC/JobPosting/TC_JobPosting_NoCredit_Step3']
+            user_journery.PostJob_WriteJobAd: [category.OKR1, 'Test Cases/RC/JobPosting/TC_JobPosting_NoCredit_Create'],
+            user_journery.PostJob_PromoteJobAd: [category.OKR1, 'Test Cases/RC/JobPosting/TC_JobPosting_NoCredit_Promote'],
+            user_journery.PostJob_PreviewJobAd: [category.OKR1, 'Test Cases/RC/JobPosting/TC_JobPosting_NoCredit_Preview'],
+            user_journery.PostJob_Checkout: [category.OKR3, 'Test Cases/RC/JobPosting/TC_JobPosting_NoCredit_CheckOut']
         },
         "status": 1
     }
