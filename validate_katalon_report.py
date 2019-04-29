@@ -48,7 +48,7 @@ def validate_purchase_ui(steps, country, report_path, sql_insert_data_list=[], i
                             logger.error('send slack error:' + str(e))
                         finally:
                             logger.info('end send slack...')
-                    sql_insert_data_list.append((now_id, country, step, item[0], status.Failed, '', now_str))
+                    sql_insert_data_list.append((now_id, country, step, item[0], status.Failed, report_path, now_str))
                     step_go = False
             else:
                 logger.info('Skip: country=%s, step=%s, case=%s' % (country, step, item[1]))
