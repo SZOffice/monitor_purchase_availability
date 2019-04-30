@@ -22,3 +22,7 @@ class status():
     NotValid_Skip = "2"
     NotValid_NoLog = "3"
 #print(user_journery.PostJob_PaymentLog)
+
+class color():
+    Success = "#7CD197"
+    Fail = "#BB383F"

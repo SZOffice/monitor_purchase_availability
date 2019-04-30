@@ -7,7 +7,7 @@ import helpers.sql_helper as sql_helper
 import helpers.send_slack as send_slack
 import helpers.logger_helper as logger_helper
 import config
-from enums import status
+from enums import status, color
 
 now = datetime.datetime.now()
 now_str = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -39,7 +39,7 @@ def validate_purchase_ui(steps, country, report_path, sql_insert_data_list=[], i
                                     "pretext": "--------------",
                                     "title": "Country=%s, Step=%s, Case=%s" %  (country, step, item[1]), 
                                     "text": "Report file path: %s" % report_path, 
-                                    "color":"#7CD197",
+                                    "color": color.Fail,
                                     "ts": int(time.time())
                                 }
                             ]

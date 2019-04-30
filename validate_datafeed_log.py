@@ -9,7 +9,7 @@ import helpers.sql_helper as sql_helper
 import helpers.log_helper as log_helper
 import helpers.logger_helper as logger_helper
 import config
-from enums import status, category, user_journery
+from enums import status, category, user_journery, color
 
 now = datetime.now()
 now_str = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -126,7 +126,7 @@ def validate_log(server, env, country, last_log_time='', is_send_slack=False, is
                         "pretext": "--------------",
                         "title": "server:%s | total:%s | error:%s" % (server, str(totalLogs), str(len(list_error_log))), 
                         "text": '\n'.join(list_error_log), 
-                        "color":"#7CD197",
+                        "color": color.Fail,
                         "ts": int(time.time())
                     }
                 ]
