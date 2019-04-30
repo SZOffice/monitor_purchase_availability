@@ -15,7 +15,8 @@ now = datetime.now()
 now_str = now.strftime("%Y-%m-%d %H:%M:%S")
 now_id = now.strftime("%Y%m%d%H%M%S")
 logger = logger_helper.mylog('validate_datafeed_log').getlog()
-  
+today_str = now.strftime("%d/%b/%Y")
+
 def string_toDatetime(string):
     return datetime.strptime(string, "%d/%b/%Y:%H:%M:%S")
 
@@ -72,7 +73,7 @@ def validate_log(server, env, country, last_log_time='', is_send_slack=False, is
     lines = file_helper.read_file_lines(filePath)
     for line in lines:
         log_time = line.split(' ')[0]
-        if last_log_time == '' or string_toDatetime(last_log_time) < string_toDatetime(log_time):
+        if (last_log_time == '' or string_toDatetime(last_log_time) < string_toDatetime(log_time)) and (today_str in log_time):
             last_log_time = log_time
             totalLogs = totalLogs + 1
             

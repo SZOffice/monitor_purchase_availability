@@ -58,7 +58,7 @@ def send_email(from_email, to_emails, subject, body, isHTML=False, attachments=[
 def send_by_sendgrid(to_emails, msg):
     mail_host="smtp.sendgrid.net"
     mail_user="apikey"
-    mail_pass="pls input sendgrid key"
+    mail_pass="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"
     sender = msg['From']
     smtpObj = smtplib.SMTP() 
     smtpObj.connect(mail_host, 25)    # 25 为 SMTP 端口号
