@@ -13,7 +13,8 @@ class mylog(object):
  
         #设置日志存放路径，日志文件名
         #获取本地时间，转换为设置的格式
-        rq = time.strftime('%Y%m%d%H%M',time.localtime(time.time()))
+        #rq = time.strftime('%Y%m%d%H%M',time.localtime(time.time()))
+        rq = time.strftime('%Y%m%d',time.localtime(time.time()))
         #设置所有日志和错误日志的存放路径
         baseDir = sys.path[0]
         print('baseDir: %s' % baseDir)
