@@ -20,7 +20,7 @@ if __name__ == "__main__":
         logger.info("not args")
         env='Production'
         country='HK'
-        report_id='7'
+        report_id='20190520_143048'
     else:
         env = args[0]
         country = args[1]
@@ -32,12 +32,14 @@ if __name__ == "__main__":
     for category in config.autotest_category:
         if category["status"] == 1:
             report_path = config.path_katalon_report.format(env, category["name"], report_id)
-            is_success_purchase_ui = validate_katalon_report.validate_purchase_ui(category["steps"], country, report_path, sql_insert_data_list, True)    
+            report_result = config.url_ui_automatic_Report.format(report_id)
+            is_success_purchase_ui = validate_katalon_report.validate_purchase_ui(category["steps"], country, report_path,report_result,sql_insert_data_list,True)    
             validate_info.append({
                 "type": category["type"],
                 "is_skip": False #(not is_success_purchase_ui)
             })
-    validate_datafeed_log.call_datafeed(env, country)
+        if category["type"]!= "10":
+            validate_datafeed_log.call_datafeed(env, country)
     sql_insert_data_list = validate_datafeed_log.validate_payment_log(env, country, validate_info, sql_insert_data_list)
     logger.info("sql_insert_data_list: %s" % sql_insert_data_list)
     

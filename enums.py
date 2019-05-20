@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class user_journery():
+    Login ="10"
     Normal_PackageSelect = "1"
     Normal_Checkout = "2"
     Normal_PaymentLog = "3"
@@ -15,6 +16,7 @@ class category():
     OKR1 = "1"
     OKR2 = "2"
     OKR3 = "3"
+    OKR4 = "4"
 
 class status():
     Failed = "0"

@@ -14,7 +14,7 @@ now_str = now.strftime("%Y-%m-%d %H:%M:%S")
 now_id = now.strftime("%Y%m%d%H%M%S")
 logger = logger_helper.mylog('validate_katalon_report').getlog()
 
-def validate_purchase_ui(steps, country, report_path, sql_insert_data_list=[], is_send_slack=False):
+def validate_purchase_ui(steps, country, report_path,report_result, sql_insert_data_list=[], is_send_slack=False):
     with open(report_path) as csvfile:
         readCSV = csv.reader(csvfile, delimiter=',')
 
@@ -38,7 +38,7 @@ def validate_purchase_ui(steps, country, report_path, sql_insert_data_list=[], i
                                 {
                                     "pretext": "--------------",
                                     "title": "Country=%s, Step=%s, Case=%s" %  (country, step, item[1]), 
-                                    "text": "Report file path: %s" % report_path, 
+                                    "text": "Refer To: %s" % report_result, 
                                     "color": color.Fail,
                                     "ts": int(time.time())
                                 }
@@ -60,9 +60,9 @@ if __name__ == "__main__":
     args = sys.argv[1:]
     if not args:
         logger.info("not args")
-        env='Preview'
+        env='Production'
         country='HK'
-        report_id='7'
+        report_id='20190520_143048'
     else:
         env = args[0]
         country = args[1]
