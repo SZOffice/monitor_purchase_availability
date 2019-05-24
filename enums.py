@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 class user_journery():
-    Login ="10"
     Normal_PackageSelect = "1"
     Normal_Checkout = "2"
     Normal_PaymentLog = "3"
@@ -11,6 +10,7 @@ class user_journery():
     PostJob_PackageSelect = "7"
     PostJob_Checkout = "8"
     PostJob_PaymentLog = "9"
+    Login ="10"
 
 class category():
     OKR1 = "1"

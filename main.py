@@ -38,8 +38,8 @@ if __name__ == "__main__":
                 "type": category["type"],
                 "is_skip": False #(not is_success_purchase_ui)
             })
-        if category["type"]!= "10":
-            validate_datafeed_log.call_datafeed(env, country)
+        #if category["type"]!= "10":
+        #    validate_datafeed_log.call_datafeed(env, country)
     sql_insert_data_list = validate_datafeed_log.validate_payment_log(env, country, validate_info, sql_insert_data_list)
     logger.info("sql_insert_data_list: %s" % sql_insert_data_list)
     

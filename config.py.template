@@ -65,5 +65,13 @@ autotest_category = [
             user_journery.PostJob_Checkout: [category.OKR3, 'Test Cases/RC/JobPosting/TC_JobPosting_NoCredit_CheckOut']
         },
         "status": 1
+    },
+    {
+        "type":user_journery.Login,
+        "name":"TS_RC_AvailabilityOfOnlinePurchase",
+        "steps":{
+            user_journery.Login:[category.OKR4,"Test Cases/RC/Login/TC_NoCreditLogin"]
+        },
+        "status": 1
     }
 ] 
