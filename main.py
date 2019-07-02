@@ -33,14 +33,14 @@ if __name__ == "__main__":
         if category["status"] == 1:
             report_path = config.path_katalon_report.format(env, category["name"], report_id)
             report_result = config.url_ui_automatic_Report.format(report_id)
-            is_success_purchase_ui = validate_katalon_report.validate_purchase_ui(category["steps"], country, report_path,report_result,sql_insert_data_list,True)    
+            is_success_purchase_ui = validate_katalon_report.validate_purchase_ui(now_id, category["steps"], country, report_path,report_result,sql_insert_data_list,True)    
             validate_info.append({
                 "type": category["type"],
                 "is_skip": False #(not is_success_purchase_ui)
             })
         #if category["type"]!= "10":
         #    validate_datafeed_log.call_datafeed(env, country)
-    sql_insert_data_list = validate_datafeed_log.validate_payment_log(env, country, validate_info, sql_insert_data_list)
+    sql_insert_data_list = validate_datafeed_log.validate_payment_log(now_id, env, country, validate_info, sql_insert_data_list)
     logger.info("sql_insert_data_list: %s" % sql_insert_data_list)
     
     my_Conn = sql_helper.MYSQL(host=config.aws_sycee_monitor_mysql["host"], user=config.aws_sycee_monitor_mysql["user"], pwd=config.aws_sycee_monitor_mysql["pwd"], db=config.aws_sycee_monitor_mysql["db"])    

@@ -14,7 +14,7 @@ now_str = now.strftime("%Y-%m-%d %H:%M:%S")
 now_id = now.strftime("%Y%m%d%H%M%S")
 logger = logger_helper.mylog('validate_katalon_report').getlog()
 
-def validate_purchase_ui(steps, country, report_path,report_result, sql_insert_data_list=[], is_send_slack=False):
+def validate_purchase_ui(log_id, steps, country, report_path,report_result, sql_insert_data_list=[], is_send_slack=False):
     with open(report_path) as csvfile:
         readCSV = csv.reader(csvfile, delimiter=',')
 
@@ -28,7 +28,7 @@ def validate_purchase_ui(steps, country, report_path,report_result, sql_insert_d
                         break
                 if is_success:
                     logger.info('katalon passed: country=%s, step=%s, case=%s' % (country, step, item[1]))
-                    sql_insert_data_list.append((now_id, country, step, item[0], status.Success, '', now_str))
+                    sql_insert_data_list.append((log_id, country, step, item[0], status.Success, '', now_str))
                 else:
                     logger.info('katalon failed: country=%s, step=%s, case=%s' % (country, step, item[1]))
                     if is_send_slack:
@@ -48,11 +48,11 @@ def validate_purchase_ui(steps, country, report_path,report_result, sql_insert_d
                             logger.error('send slack error:' + str(e))
                         finally:
                             logger.info('end send slack...')
-                    sql_insert_data_list.append((now_id, country, step, item[0], status.Failed, report_path, now_str))
+                    sql_insert_data_list.append((log_id, country, step, item[0], status.Failed, report_path, now_str))
                     step_go = False
             else:
                 logger.info('Skip: country=%s, step=%s, case=%s' % (country, step, item[1]))
-                sql_insert_data_list.append((now_id, country, step, item[0], status.NotValid_Skip, '', now_str))
+                sql_insert_data_list.append((log_id, country, step, item[0], status.NotValid_Skip, '', now_str))
     return sql_insert_data_list
 
 if __name__ == "__main__":
@@ -60,9 +60,9 @@ if __name__ == "__main__":
     args = sys.argv[1:]
     if not args:
         logger.info("not args")
-        env='Production'
+        env='Preview'
         country='HK'
-        report_id='20190520_143048'
+        report_id='7'
     else:
         env = args[0]
         country = args[1]

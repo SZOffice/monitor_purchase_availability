@@ -137,7 +137,7 @@ def validate_log(server, env, country, last_log_time='', is_send_slack=False, is
         logger.info("validated pass")
     return (totalLogs, last_log_time, list_error_log, list_error_type)
     
-def validate_payment_log(env, country, validate_info, sql_insert_data_list=[]):    
+def validate_payment_log(log_id, env, country, validate_info, sql_insert_data_list=[]):    
     error_log = ""
     log_path = config.validate_nginx_paymentgateway_log
     log_data = file_helper.read_file_json(log_path)
@@ -166,12 +166,12 @@ def validate_payment_log(env, country, validate_info, sql_insert_data_list=[]):
     for info in validate_info:
         cur_type = info["type"]
         if info["is_skip"] or total_log == 0:
-            sql_insert_data_list.append((now_id, country, cur_type, category.OKR3, (status.NotValid_Skip if info["is_skip"] else status.NotValid_NoLog), ('skip validate' if info["is_skip"] else 'no payment log'), now_str))
+            sql_insert_data_list.append((log_id, country, cur_type, category.OKR3, (status.NotValid_Skip if info["is_skip"] else status.NotValid_NoLog), ('skip validate' if info["is_skip"] else 'no payment log'), now_str))
         else:
             if cur_type in error_type:
-                sql_insert_data_list.append((now_id, country, cur_type, category.OKR3, (status.Failed if error_log!='' else status.Success), error_log, now_str))
+                sql_insert_data_list.append((log_id, country, cur_type, category.OKR3, (status.Failed if error_log!='' else status.Success), error_log, now_str))
             else:
-                sql_insert_data_list.append((now_id, country, cur_type, category.OKR3, status.Success, '', now_str))
+                sql_insert_data_list.append((log_id, country, cur_type, category.OKR3, status.Success, '', now_str))
 
     return sql_insert_data_list
 
